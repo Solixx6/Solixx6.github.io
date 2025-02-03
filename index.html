@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Basic Favicon -->
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<!-- For Modern Browsers -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+<!-- Apple Touch Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+<!-- Android Chrome -->
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#ffffff">
+ <!-- Existing meta tags -->
+ <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+ <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+ <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+ <link rel="manifest" href="/site.webmanifest">
+ <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+ <meta name="msapplication-TileColor" content="#da532c">
+ <meta name="theme-color" content="#ffffff">
+ <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        /* Auth Buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .login-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .signup-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        /* Cart Styles */
+        .cart {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+        }
+
+        #cart-count {
+            background-color: #ff5722;
+            padding: 2px 10px;
+            border-radius: 50%;
+        }
+
+        /* Product Grid */
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 30px;
+            padding-bottom: 80px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Forms */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* User Greeting */
+        .user-greeting {
+            color: white;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-greeting button {
+            background: #dc3545;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tech Store</h1>
+        <div class="header-right">
+            <div class="auth-buttons">
+                <button class="auth-btn login-btn" data-modal="login">Login</button>
+                <button class="auth-btn signup-btn" data-modal="signup">Sign Up</button>
+            </div>
+            <div class="user-greeting"></div>
+            <div class="cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="product-list">
+            <div class="product">
+                <img src="images/ONIKUMA-K10-Pro-Professional-Gaming-Headset-Wired-Headset-for-PCPS4XBOX-With-LED-Backlight-MIC-For-Gamer_600x.webp" alt="Gaming Headset">
+                <h2>Pro Gaming Headset</h2>
+                <p>$129.99</p>
+                <button onclick="addToCart('Gaming Headset', 129.99)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="images/Black_924a0870-526a-4f9b-b6d6-28994e927192.webp" alt="Mechanical Keyboard">
+                <h2>Mechanical Keyboard</h2>
+                <p>$89.99</p>
+                <button onclick="addToCart('Mechanical Keyboard', 89.99)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="images/l20m01.webp" alt="Gaming Mouse">
+                <h2>RGB Gaming Mouse</h2>
+                <p>$59.99</p>
+                <button onclick="addToCart('Gaming Mouse', 59.99)">Add to Cart</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Username" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            <p style="margin-top: 15px;">Don't have an account? <a href="#" id="showSignup" style="color: #007bff;">Sign Up</a></p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Account</h2>
+            <form id="signupForm">
+                <input type="text" id="signupUsername" placeholder="Username" required>
+                <input type="password" id="signupPassword" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Tech Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Paste the full JavaScript code from previous answer here
+        // (The complete JavaScript code provided in the previous response)
+    </script>
+</body>
+</html>
